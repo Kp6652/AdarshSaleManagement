@@ -1,0 +1,105 @@
+﻿@using System.Data
+@model DataSet
+
+@{
+    ViewData["Title"] = "Client report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <br/>
+    <br/>
+<style>
+         th, td {
+  text-align:center;
+}
+tr:hover{
+  background: #15b6b7;
+  box-shadow: 0px 2px 35px -5px #15b6b7;
+  cursor: pointer;
+  color:#ffffff;
+}
+tr:focus {
+  outline: none;
+}
+</style>  
+
+<h1 class="text-primary" ><u>Our  Client's</u></h1>
+<hr/>
+
+
+<div class="table-responsive">
+ 
+
+<table class="table table-bordered display nowrap" style="border:2px double #b0e0e6" id="clientreport">
+    <thead class="bg-secondary bg-gradient text-light" style="text-align:center">
+        <tr>
+             <th>
+                Company Name
+            </th>
+            <th>
+                Contact Per
+            </th>
+            <th>
+                Contact Mobile
+            </th>
+            <th>
+                Contact Email
+            </th>
+            <th>
+                Address
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (DataRow dr in Model.Tables[0].Rows) {
+        <tr>
+            <td>
+
+                @dr["companyName"]
+            </td>
+             
+            <td>
+                @dr["contactPer"]
+            </td>
+            <td>
+                @dr["contactMobile"]
+            </td>
+            <td>
+                @dr["contactEmail"]
+            </td>
+            <td>
+                @dr["address"]
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+</div>
+
+<style rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" ></style>
+<style rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css" ></style>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+<script>
+
+
+    $(document).ready( function () {
+    $('#clientreport').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } )
+} );
+
+      
+
+
+</script>

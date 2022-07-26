@@ -1,0 +1,156 @@
+﻿@using System.Data
+@model DataSet
+
+@{
+    ViewData["Title"] = "list";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style >
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    select, option {
+        width: 250px;
+    }
+
+    option {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .im {
+        width: 150px;
+        border-style: double;
+        border: 4px solid #3EC0C2;
+        border-radius: 12px;
+    }
+
+    .shb {
+        border-style: double;
+        border: 6px solid #DAF7A6;
+        border-radius: 12px;
+        width: 200px;
+    }
+
+    .iml {
+        width: 70px;
+        background-color: #3EC0C2;
+        height: 35px;
+    }
+
+    .bround {
+        border-style: double;
+        border: 6px solid #DAF7A6;
+        border-radius: 12px;
+    }
+
+</style>
+<br/>
+<br/>
+
+
+<h1 class="text-primary">Sale's</h1>
+
+
+@*<div class="row">
+            <div class="row">
+            <label for="year" class="iml bround"><span class="badge">Sort By !</span> </label>
+            <select class="im" name="Sortby" id="sortby" onchange="showSales()">
+                <option value="saleDate" selected>Sale Date</option>
+                <option value="total" >Sale Amount</option>
+                <option value="companyName">Client Name</option>
+            </select>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="sortradiio" id="asc"  value="ASC" onchange="showSales()">
+            <label class="form-check-label" for="asc">Ascending</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="sortradiio" id="des" checked value="DESC" onchange="showSales()">
+            <label class="form-check-label" for="des">Descending</label>
+        </div>
+           <div class="col-3"><br />
+            <input class="btn btn-primary shb" id="refresh" type="button" value="Refresh" onclick="showReport()" />
+            </div>
+  </div>*@
+
+<div class="table-responsive">
+ 
+
+<table class="table table-bordered" style="border:2px double #b0e0e6">
+    <thead class="bg-secondary bg-gradient text-light" style="text-align:center">
+        <tr>
+             
+            <th>
+                Client Name
+            </th>
+            <th>
+                Sale Date
+            </th>
+            <th>
+                Unit Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Total
+            </th>
+            <th>
+                Remarks
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (DataRow dr in Model.Tables[0].Rows) {
+        <tr>
+           
+             
+            <td>
+                @dr["companyName"]
+            </td>
+            <td >
+                @dr["saleDate"]
+            </td>
+            <td >
+                @dr["unitPrice"]
+            </td>
+            <td >
+                @dr["qty"]
+            </td>
+            <td >
+                @dr["total"]
+            </td>
+            <td >
+                @dr["Remarks"]
+            </td>
+
+            <td style="text-align:center">
+                @Html.ActionLink("Edit", "Edit", new {  id=@dr["id"]  }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=@dr["id"]  }) 
+             </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+</div>
+@*<script>
+    //formatDate();
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [day, month,year ].join('-');
+}
+console.log(formatDate($("sald").val());
+</script>*@

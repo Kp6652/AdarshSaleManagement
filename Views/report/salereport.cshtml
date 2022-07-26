@@ -1,0 +1,149 @@
+﻿@using System.Data
+@model DataSet
+
+@{
+    ViewData["Title"] = "Sale report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    select, option {
+        width: 250px;
+    }
+
+    option {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .im {
+        width: 150px;
+        border-style: double;
+        border: 4px solid #3EC0C2;
+        border-radius: 12px;
+    }
+
+    .shb {
+        border-style: double;
+        border: 6px solid #DAF7A6;
+        border-radius: 12px;
+        width: 200px;
+    }
+
+    .iml {
+        width: 70px;
+        background-color: #3EC0C2;
+        height: 35px;
+    }
+
+    .bround {
+        border-style: double;
+        border: 6px solid #DAF7A6;
+        border-radius: 12px;
+    }
+     th, td {
+  text-align:center;
+}
+tr:hover{
+  background: #15b6b7;
+  box-shadow: 0px 2px 35px -5px #15b6b7;
+  cursor: pointer;
+  color:#ffffff;
+}
+tr:focus {
+  outline: none;
+}
+</style>
+<br/>
+<br/>
+
+
+<h1 class="text-primary"><u>Our Sale's</u></h1>
+<hr/>
+<div class="table-responsive">
+<table class="table table-bordered  display nowrap" style="border:2px double #b0e0e6" id="salereport">
+    <thead class="bg-secondary bg-gradient text-light" style="text-align:center">
+        <tr>
+             
+            <th>
+                Client Name
+            </th>
+            <th>
+                Sale Date
+            </th>
+            <th>
+                Unit Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Total
+            </th>
+            <th>
+                Remark
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (DataRow dr in Model.Tables[0].Rows) {
+        <tr>
+           
+             
+            <td>
+                @dr["companyName"]
+            </td>
+            <td>
+                @dr["saleDate"]
+            </td>
+            <td>
+                @dr["unitPrice"]
+            </td>
+            <td>
+                @dr["qty"]
+            </td>
+            <td>
+                @dr["total"]
+            </td>
+            <td>
+                @dr["Remarks"]
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+<style rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" ></style>
+<style rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css" ></style>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+<script>
+
+
+    $(document).ready( function () {
+    $('#salereport').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } )
+} );
+
+      
+
+
+</script>

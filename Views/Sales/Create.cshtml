@@ -1,0 +1,116 @@
+﻿@model AdarshSale.Models.saleentry
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+.center {
+  margin: auto;
+  width: 100%;
+  border: 3px solid green;
+  padding: 10px;
+}</style>
+
+<br/>
+<br/>
+<h1 class="text-primary">Sale Entry </h1>
+
+<script src="~/js/jquery3.5.1.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<hr />
+<div class="row center ">
+    <div class="col-md-4" >
+        <form asp-action="Create" class="form-inline">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @Html.HiddenFor(m =>m.id)
+
+            <div class="form-group">
+                <label asp-for="client_id" class="control-label"></label><br/>
+              @*  <input asp-for="client_id" class="form-control" />*@
+
+                <select asp-for="client_id" class="form-control" asp-items="@ViewBag.ClientList" >  
+                    </select>  
+                
+
+
+                <span asp-validation-for="client_id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="unitPrice" class="control-label"></label><br/>
+                <input asp-for="unitPrice" class="form-control" />
+                <span asp-validation-for="unitPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="qty" class="control-label"></label><br />
+                <input asp-for="qty" class="form-control" />
+                <span asp-validation-for="qty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="saleDate" class="control-label"></label><br/>
+                  @if (Model.id > 0)
+                {
+                    <input asp-for="saleDate" type="date"   class="form-control" placeholder="DD-MM-YYYY">
+                }
+                else
+                {
+                    <input asp-for="saleDate" type="date"   class="form-control" placeholder="DD-MM-YYYY" value=""min="05-01-1991" max="23-09-2070">
+                }
+                <span asp-validation-for="saleDate" class="text-danger"></span>
+            </div>
+
+            
+            <div class="form-group">
+                <label asp-for="remarks" class="control-label"></label><br/>
+                <input asp-for="remarks" class="form-control" />
+                <span asp-validation-for="remarks" class="text-danger"></span>
+            </div>
+            @if (ViewData["message"]!=null)
+            {
+
+                <div class="alert alert-success" id="msg">
+                   <strong>Success!</strong> @ViewData["message"]
+
+                </div>
+                <script>
+                      
+                        $("#unitPrice").val("");
+                        $("#qty").val("");
+                        $("#saleDate").val("");
+                        $("#remarks").val("");
+                   $("#msg").delay(7000).fadeOut(300);
+
+                   function pageRedirect() {
+                    window.location.href = "/Sales/list";
+                    }   
+                    setTimeout("pageRedirect()", 1000);
+                </script>
+                        
+               
+
+            }
+
+            <div class="form-group"><br />
+                @if (Model.id > 0)
+                {
+                         <input type="submit" value="Update" class="btn btn-success" />
+
+
+                }
+                else
+                {
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                }
+            </div>
+        </form>
+    </div>
+   
+</div>
+
+
+
+

@@ -1,0 +1,70 @@
+﻿@using System.Data
+@model DataSet
+
+@{
+    ViewData["Title"] = "list";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <br/>
+    <br/>
+  
+
+<h1 class="text-primary" >Client's</h1>
+
+
+
+<div class="table-responsive">
+ 
+
+<table class="table table-bordered" style="border:2px double #b0e0e6">
+    <thead class="bg-secondary bg-gradient text-light" style="text-align:center">
+        <tr>
+             <th>
+                Company Name
+            </th>
+            <th>
+                Contact Per
+            </th>
+            <th>
+                Contact Mobile
+            </th>
+            <th>
+                Contact Email
+            </th>
+            <th>
+                Address
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (DataRow dr in Model.Tables[0].Rows) {
+        <tr>
+            <td>
+
+                @dr["companyName"]
+            </td>
+             
+            <td>
+                @dr["contactPer"]
+            </td>
+            <td>
+                @dr["contactMobile"]
+            </td>
+            <td>
+                @dr["contactEmail"]
+            </td>
+            <td>
+                @dr["address"]
+            </td>
+
+            <td style="text-align:center">
+                @Html.ActionLink("Edit", "Edit", new {  id=@dr["id"]  }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=@dr["id"]  }) 
+             </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+</div>

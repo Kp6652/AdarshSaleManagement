@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .im {
+    width: 150px;
+    border-style: double;
+    border: 4px solid #3EC0C2;
+    border-radius: 12px;
+    
+}
+.shb{
+border-style: double;
+    border: 6px solid #DAF7A6;
+    border-radius: 12px;
+    width:200px;
+}
+   .iml {
+    width: 70px;
+    background-color:#3EC0C2;
+    height:35px;
+   
+    
+
+}
+.bround {
+    border-style: double;
+    border: 6px solid #DAF7A6;
+    border-radius: 12px;
+    
+}
+ .nv {
+                
+                position: relative;
+                top:12px;
+                width:200px;
+                float: left;
+                
+            }
+</style>
+
+
+
+    <br/>
+    <br/>
+ <div class="container-fluid">
+ <div style="text-align:center;">
+        <div class="form-group" style=" display:inline-block;float:left"><h1 class="text-primary nav"><u>Sale report</u></h1></div>
+         <div class="form-group" style=" display:inline-block;">
+            <label for="fromdate" class="iml bround"><span class="badge">From:</span> </label>
+            <input class="form-form-control im" id="fromdate" type="date" value="@(DateTime.Now.AddDays(-30).ToString("dd-mm-yyyy"))" />
+            <label for="todate" class="iml bround"><span class="badge">To:</span></label>
+            <input class="form-form-control im" id="todate" type="date" value="@(DateTime.Now.ToString("dd-mm-yyyy"))" />
+            <input  class="btn btn-primary shb" id="button1" type="button" value="Show" onclick="showReport()" />
+        </div>
+
+ </div>
+
+   
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="msg" style="display:none">
+                
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+</div>
+ <hr/>
+    
+    <div class="table-responsive">
+
+    <div id="rpt">
+
+
+    </div>
+
+</div>
+@*
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+
+<script src="~/js/jquery3.5.1.js"></script>
+
+<script>
+
+    
+
+
+
+      function showReport()
+      {
+
+          //$("#rpt").html("loading...");
+          if($("#fromdate").val()=="")
+          {
+
+          $("#msg").show().html("Please select From date").delay(7000).fadeOut(300);
+              
+             return;
+
+          }
+
+          if($("#todate").val()=="")
+          {
+
+          $("#msg").show().html("Please select To date").delay(7000).fadeOut(300);
+              
+             return;
+
+          }
+
+
+          $.get("/report/list", {fromdate : $("#fromdate").val()  ,  todate:$("#todate").val()}, function(res){
+
+             //alert(result);
+
+      $("#rpt").html(res);
+
+
+    });
+
+         
+      }
+
+</script>

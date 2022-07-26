@@ -1,0 +1,407 @@
+﻿@using Microsoft.AspNetCore.Http
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"] - Adarsh</title>
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">*@
+    @* <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/AdarshSale.styles.css" asp-append-version="true" />
+    *@
+
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="~/assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="~/css/styles.css" rel="stylesheet" />
+
+
+
+
+
+
+
+    <style>
+        li a:hover {
+            background-color: #289cbd;
+        }
+        
+        .dropbtn {
+  background-color: #2c3e50;
+  color: white;
+  padding: 16px;
+/*  font-size: 18px large;
+*/  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #289cbd;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 2px 3px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display:block;}
+
+.dropdown:hover .dropbtn {background-color: #289cbd;}        
+</style>
+
+
+</head>
+
+
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top mb-3" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Adarsh</a>
+            <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+
+                      <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="Home" asp-action="Index" class="nav-link py-3 px-0 px-lg-3 rounded">Home</a></li>
+
+
+                    @if (Context.Session.GetString("userId") != null)
+                    {
+                        <div class="dropdown">
+                        <button class="dropbtn "><b>ENTRY</b></button>
+
+                        <div class="dropdown-content">
+                        <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="Client" asp-action="Create" class="nav-link py-3 px-0 px-lg-3 rounded">Add Client</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="Client" asp-action="list" class="nav-link py-3 px-0 px-lg-3 rounded">Modify Client</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="Sales" asp-action="Create" class="nav-link py-3 px-0 px-lg-3 rounded">Sale Entry</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="Sales" asp-action="list" class="nav-link py-3 px-0 px-lg-3 rounded">Modify sale</a></li>
+                       </div>
+                       </div>
+                       
+                        <div class="dropdown">
+                        <button class="dropbtn"><b>REPORT</b></button>
+                        <div class="dropdown-content">
+                        <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="report" asp-action="ClientReport" class="nav-link py-3 px-0 px-lg-3 rounded">Our Client's</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="report" asp-action="salereport" class="nav-link py-3 px-0 px-lg-3 rounded">Sale's Report</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="report" asp-action="index" class="nav-link py-3 px-0 px-lg-3 rounded">Preodic report</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="report" asp-action="yearReport" class="nav-link py-3 px-0 px-lg-3 rounded">Yearly report</a></li>
+                         <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="Home" asp-action="enquiry" class="nav-link py-3 px-0 px-lg-3 rounded">Enquiry</a></li>
+                         <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="Home" asp-action="dashboard" class="nav-link py-3 px-0 px-lg-3 rounded">Dashboard</a></li>
+
+                        </div>
+                        </div>
+                        
+                        <div class="dropdown">
+                        <button class="dropbtn">
+                         <a class="btn btn-outline-light"><i class="fas fa-adjust" style="font-size:27px;color:#00acee"></i></a></button>
+                        <div class="dropdown-content">
+                        <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="home" asp-action="index" class="nav-link py-3 px-0 px-lg-3 rounded">Log out</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="Login" asp-action="passwordreset" class="nav-link py-3 px-0 px-lg-3 rounded">Change Password</a></li>
+                        
+                      </div>
+                      </div>  
+                    }
+
+                    else
+                    {
+                    
+                    <li class="nav-item mx-0 mx-lg-1"> <a href="#about" class="nav-link py-3 px-0 px-lg-3 rounded">About</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"> <a href="#contact" class="nav-link py-3 px-0 px-lg-3 rounded">Contact us</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"> <a asp-controller="Login" asp-action="Index" class="nav-link py-3 px-0 px-lg-3 rounded">Login</a></li>
+                        
+                    }
+                     
+                     
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <br />
+    <br />
+    <br />
+    
+    @RenderBody()
+
+
+
+    <br />
+    <br />
+    <br />
+    <!-- Footer-->
+    <footer class="footer text-center" style="height=">
+        <div class="container">
+            <div class="row">
+                <!-- Footer Location-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="text-uppercase mb-4">Location</h4>
+                    <p class="lead mb-0">
+                        West sagarpur New Delhi
+                        <br />
+                        Mob 9540287143
+                    </p>
+                </div>
+                <!-- Footer Social Icons-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="text-uppercase mb-4">Around the Web</h4>
+
+
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://api.whatsapp.com/send?phone=+919540287143&text=Hi%20I%20got%20ur%20contact%20form%20ur%20website%20kindly%20contact%20me%20on%20this%20number%20thanks..."><i class="fab fa-whatsapp-square" style="font-size:27px;color:green"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1" href="mailto:Adarsh91@gmail.com?subject=info&body=Requested%20from%20website%20kindly%20contact%20me"><i class="fas fa-mail-bulk"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://www.instagram.com/__aadarsh__gupta/"><i class="fab fa-instagram-square" style="font-size:27px;color:red"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/adarshsrivastav"><i class="fab fa-fw fa-facebook-f" style="font-size:37px;color:#4267B2"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter" style="font-size:37px;color:#00acee"></i></a>
+                </div>
+                <!-- Footer About Text-->
+                <div class="col-lg-4">
+                    <h4 class="text-uppercase mb-4">About Adarsh</h4>
+                    <p class="lead mb-0">
+                        manager
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Copyright Section-->
+    <div class="copyright py-4 text-center text-white">
+        <div class="container"><small>Copyright &copy; Adarsh.com 2021</small></div>
+    </div>
+    <!-- Portfolio Modals-->
+    <!-- Portfolio Modal 1-->
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Log Cabin</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <!-- Portfolio Modal - Image-->
+                                <img class="img-fluid rounded mb-5" src="~/assets/img/portfolio/cabin.png" alt="..." />
+                                <!-- Portfolio Modal - Text-->
+                                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                                <button class="btn btn-primary" href="#!" data-bs-dismiss="modal">
+                                    <i class="fas fa-times fa-fw"></i>
+                                    Close Window
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Portfolio Modal 2-->
+    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" aria-labelledby="portfolioModal2" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Tasty Cake</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <!-- Portfolio Modal - Image-->
+                                <img class="img-fluid rounded mb-5" src="~/assets/img/portfolio/cake.png" alt="..." />
+                                <!-- Portfolio Modal - Text-->
+                                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                                <button class="btn btn-primary" href="#!" data-bs-dismiss="modal">
+                                    <i class="fas fa-times fa-fw"></i>
+                                    Close Window
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Portfolio Modal 3-->
+    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" aria-labelledby="portfolioModal3" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Circus Tent</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <!-- Portfolio Modal - Image-->
+                                <img class="img-fluid rounded mb-5" src="~/assets/img/portfolio/circus.png" alt="..." />
+                                <!-- Portfolio Modal - Text-->
+                                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                                <button class="btn btn-primary" href="#!" data-bs-dismiss="modal">
+                                    <i class="fas fa-times fa-fw"></i>
+                                    Close Window
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Portfolio Modal 4-->
+    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" aria-labelledby="portfolioModal4" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Controller</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <!-- Portfolio Modal - Image-->
+                                <img class="img-fluid rounded mb-5" src="~/assets/img/portfolio/game.png" alt="..." />
+                                <!-- Portfolio Modal - Text-->
+                                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                                <button class="btn btn-primary" href="#!" data-bs-dismiss="modal">
+                                    <i class="fas fa-times fa-fw"></i>
+                                    Close Window
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Portfolio Modal 5-->
+    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" aria-labelledby="portfolioModal5" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Locked Safe</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <!-- Portfolio Modal - Image-->
+                                <img class="img-fluid rounded mb-5" src="~/assets/img/portfolio/safe.png" alt="..." />
+                                <!-- Portfolio Modal - Text-->
+                                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                                <button class="btn btn-primary" href="#!" data-bs-dismiss="modal">
+                                    <i class="fas fa-times fa-fw"></i>
+                                    Close Window
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Portfolio Modal 6-->
+    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" aria-labelledby="portfolioModal6" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Submarine</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <!-- Portfolio Modal - Image-->
+                                <img class="img-fluid rounded mb-5" src="~/assets/img/portfolio/submarine.png" alt="..." />
+                                <!-- Portfolio Modal - Text-->
+                                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                                <button class="btn btn-primary" href="#!" data-bs-dismiss="modal">
+                                    <i class="fas fa-times fa-fw"></i>
+                                    Close Window
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="~/js/scripts.js"></script>
+
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    @*<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+ *@
+</body>
+
+
+</html>

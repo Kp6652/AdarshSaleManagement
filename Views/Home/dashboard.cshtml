@@ -1,0 +1,260 @@
+﻿@using System.Data
+@model DataSet
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .button {
+  left: 50%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.chart {
+  align-content: center;
+  display: flex;
+  justify-content: center;
+}
+
+.modal {
+  text-align: center;
+}
+
+
+  .modal:before {
+    content: " ";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+
+.modal-dialog {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.modal-footer {
+  color: #00b5e6;
+  font-size: 25px;
+  text-align: center;
+}
+    select, option {
+    width: 250px;
+}
+
+option {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+    .im {
+    width: 150px;
+    border-style: double;
+    border: 4px solid #3EC0C2;
+    border-radius: 12px;
+    
+}
+.shb{
+    border-style: double;
+    border: 6px solid #DAF7A6;
+    border-radius: 12px;
+    width:200px;
+}
+   .iml {
+    width: 70px;
+    background-color:#3EC0C2;
+    height:35px;
+   
+    
+
+}
+.bround {
+    border-style: double;
+    border: 6px solid #DAF7A6;
+    border-radius: 12px;
+    
+}
+
+</style>
+<!-- Chart -->
+<br/>
+<br/>
+
+<br/>
+<br/>
+<div class="container-fluid">
+    <div style="text-align:center;">
+    <div class="form-group" style=" display:inline-block;float:left"><h1 class="text-primary nav"> <u>Dashboard!</u></h1></div>
+    <div class="col-3" style=" display:inline-block;">
+            
+            <label for="year" class="iml bround"><span class="badge">Year !</span> </label>
+            <select class="im" name="year" id="year"  onchange="GetDashboradcolumnData()">
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022" selected>2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+            </select>
+        </div>
+     </div>
+     <hr/>
+<br/>
+<br/>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="pieChart" style="height: 360px; width: 100%;">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div id="columnChart" style="height: 360px; width: 100%;">
+      </div>
+    </div>
+  </div>
+</div>
+@*
+<style rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></style>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>*@
+
+
+        <script src="~/js/jquery3.5.1.js">
+import { parseJSON } from "jquery";
+</script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<script>
+
+
+    GetDashboradcolumnData();
+    GetDashboradpieData();
+     
+
+     var columnChartValues = [ ];
+     var pieChartValues = [ ];
+
+    
+      function GetDashboradcolumnData()
+      {
+            var y;
+
+          $.get( "/Home/GetDashboradcolumnData",{y:$("#year").val()}, function(res)
+          {
+              
+              var recd= JSON.parse(res);
+              columnChartValues.push({y: recd[0]["Jan"],label:"Jan"});
+              columnChartValues.push({y: recd[0]["Feb"],label:"Feb"});
+              columnChartValues.push({y: recd[0]["March"],label:"March"});
+              columnChartValues.push({y: recd[0]["Apr"],label:"Apr"});
+              columnChartValues.push({y: recd[0]["May"],label:"May"});
+              columnChartValues.push({y: recd[0]["June"],label:"June"});
+              columnChartValues.push({y: recd[0]["July"],label:"July"});
+              columnChartValues.push({y: recd[0]["Aug"],label:"Aug" });
+              columnChartValues.push({y: recd[0]["Sep"],label:"Sep"});
+              columnChartValues.push({y: recd[0]["Oct"],label:"Oct"});
+              columnChartValues.push({y: recd[0]["Nov"],label:"Nov"});
+              columnChartValues.push({y: recd[0]["Dec"],label:"Dec"});
+             renderColumnChart(columnChartValues);
+             recd="";
+             
+      });
+      
+      }
+
+
+      function GetDashboradpieData()
+      {
+           
+          $.get( "/Home/GetDashboradpieData", function(res)
+          {    
+                var recd = JSON.parse(res);
+                for(var i=0;i<recd.length;i++)
+                {
+                    
+                  pieChartValues.push({y: recd[i]["total"],exploded:true,indexLabel:recd[i]["companyName"]});
+
+                }
+            
+              renderPieChart(pieChartValues);
+           });
+       
+      }
+
+      
+function renderPieChart(values) {
+
+  var chart = new CanvasJS.Chart("pieChart", {
+    backgroundColor: "white",
+    colorSet: "colorSet2",
+
+    title: {
+      text: "Client",
+      fontFamily: "Verdana",
+      fontSize: 25,
+      fontWeight: "normal",
+    },
+    animationEnabled: true,
+    data: [{
+      indexLabelFontSize: 15,
+      indexLabelFontFamily: "Monospace",
+      indexLabelFontColor: "darkgrey",
+      indexLabelLineColor: "darkgrey",
+      indexLabelPlacement: "outside",
+      type: "pie",
+      showInLegend: false,
+      toolTipContent: "<strong>#percent%</strong>",
+      dataPoints: values
+    }]
+  });
+  chart.render();
+}
+
+
+function renderColumnChart(values) {
+
+  var chart = new CanvasJS.Chart("columnChart", {
+    backgroundColor: "white",
+    colorSet: "colorSet3",
+    title: {
+      text: "Sale "+$("#year").val(),
+      fontFamily: "Verdana",
+      fontSize: 25,
+      fontWeight: "normal",
+    },
+    animationEnabled: true,
+    legend: {
+      verticalAlign: "bottom",
+      horizontalAlign: "center"
+    },
+    theme: "theme2",
+    data: [
+
+      {
+        indexLabelFontSize: 15,
+        indexLabelFontFamily: "Monospace",
+        indexLabelFontColor: "darkgrey",
+        indexLabelLineColor: "darkgrey",
+        indexLabelPlacement: "outside",
+        type: "column",
+        showInLegend: false,
+        legendMarkerColor: "grey",
+        dataPoints: values
+      }
+    ]
+  });
+
+  chart.render();
+}
+
+</script>

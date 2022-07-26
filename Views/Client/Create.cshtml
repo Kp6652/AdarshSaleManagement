@@ -1,0 +1,106 @@
+﻿@model AdarshSale.Models.Client
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .center {
+        margin: auto;
+        width: 100%;
+        border: 3px solid green;
+        padding: 10px;
+    }</style>
+<br/>
+<br/>
+
+
+<h1 class="text-primary">Add Client </h1>
+
+<script src="~/js/jquery3.5.1.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<hr />
+<div class="row center">
+    <div class="col-md-4 d-flex justify-content-center">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @Html.HiddenFor(m =>m.id)
+
+            <div class="form-group">
+                <label asp-for="companyName" class="control-label"></label><br />
+                <input asp-for="companyName" class="form-control" />
+                <span asp-validation-for="companyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label"> Contact Person</label><br />
+                <input asp-for="contactPer" class="form-control" />
+                <span asp-validation-for="contactPer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="contactMobile" class="control-label"></label><br />
+                <input asp-for="contactMobile" class="form-control" />
+                <span asp-validation-for="contactMobile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="contactEmail" class="control-label"></label><br />
+                <input asp-for="contactEmail" class="form-control" />
+                <span asp-validation-for="contactEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="address" class="control-label"></label><br />
+                <input asp-for="address" class="form-control" />
+                <span asp-validation-for="address" class="text-danger"></span>
+            </div>
+            @if (ViewData["message"] != null)
+            {
+
+                <div class="alert alert-success" id="msg">
+                    <strong>Success!</strong> @ViewData["message"]
+                    .
+                </div>
+
+
+                <script>
+                    
+                    $("#companyName").val("");
+                    $("#contactPer").val("");
+                    $("#contactMobile").val("");
+                    $("#contactEmail").val("");
+                    $("#address").val("");
+                    $("#msg").delay(7000).fadeOut(300);
+                    
+
+
+                    function pageRedirect() {
+                    window.location.href = "/Client/list";
+                    }   
+                    setTimeout("pageRedirect()", 1000);
+                </script>
+
+
+
+            }
+            <br/>
+            <div class="form-group">
+                @if (Model.id > 0)
+                {
+                    <input type="submit" value="Update" class="btn btn-success" />
+
+
+                }
+                else
+                {
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                }
+            </div>
+        </form>
+    </div>
+    
+</div>
+
+
+
